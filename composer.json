@@ -1,0 +1,23 @@
+{
+    "name": "astina/labels-bundle",
+    "description": "Symfony bundle that offers categorized labels for Doctrine entities to be used for filtered search.",
+    "license": "MIT",
+    "keywords": ["labels", "filter", "search"],
+    "type": "symfony-bundle",
+    "homepage": "http://astina.ch",
+    "authors": [
+        {
+            "name": "Astina AG",
+            "email": "admin@astina.ch"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/symfony": "~2.3",
+        "doctrine/orm": "~2.0"
+    },
+    "autoload": {
+        "psr-0": { "Astina\\Bundle\\LabelsBundle": "" }
+    },
+    "target-dir": "Astina/Bundle/LabelsBundle"
+}
