@@ -1,0 +1,25 @@
+parameters:
+    astina_labels.form.type.labels.class: Astina\Bundle\LabelsBundle\Form\LabelsType
+
+services:
+
+    astina_labels.form.type.labels:
+        class: %astina_labels.form.type.labels.class%
+        arguments:
+            - @astina_labels.repository.label_category
+        tags:
+            - { name: form.type, alias: astina_labels }
+
+    astina_labels.repository.label:
+        class: Astina\Bundle\LabelsBundle\Entity\LabelRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments:
+            - AstinaLabelsBundle:Label
+
+    astina_labels.repository.label_category:
+        class: Astina\Bundle\LabelsBundle\Entity\LabelCategoryRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments:
+            - AstinaLabelsBundle:LabelCategory
