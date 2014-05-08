@@ -39,9 +39,14 @@ class LabelsType extends AbstractType
             // distribute labels to category fields
 
             $form = $event->getForm();
+            $data = $event->getData();
+
+            if (null == $data) {
+                $data = new ArrayCollection();
+            }
 
             $labels = new ArrayCollection();
-            foreach ($event->getData() as $label) {
+            foreach ($data as $label) {
                 if ($label instanceof Label) {
                     $labels->add($label);
                 }
@@ -66,8 +71,16 @@ class LabelsType extends AbstractType
 
             // collect labels from category fields
 
-            /** @var PersistentCollection $data */
+            /** @var PersistentCollection|array|null $data */
             $data = $event->getData();
+
+            if (null === $data) {
+                $data = new ArrayCollection();
+            }
+
+            if (!($data instanceof ArrayCollection) && is_array($data)) {
+                $data = new ArrayCollection($data);
+            }
 
             $tmpData = clone $data;
             $data->clear();

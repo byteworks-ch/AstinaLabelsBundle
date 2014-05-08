@@ -39,6 +39,11 @@ class LabelCategory
         $this->labels = new ArrayCollection();
     }
 
+    function __toString()
+    {
+        return $this->name;
+    }
+
     public function getId()
     {
         return $this->id;
