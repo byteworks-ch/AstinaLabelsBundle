@@ -3,6 +3,7 @@
 namespace Astina\Bundle\LabelsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Astina\Bundle\LabelsBundle\Entity\LabelRepository")
@@ -17,6 +18,7 @@ class Label
     private $id;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=50)
      */
     private $name;
@@ -26,6 +28,11 @@ class Label
      * @ORM\ManyToOne(targetEntity="LabelCategory", inversedBy="labels")
      */
     private $category;
+
+    /**
+     * @Gedmo\Locale
+     */
+    private $locale;
 
     function __toString()
     {
@@ -55,5 +62,10 @@ class Label
     public function getCategory()
     {
         return $this->category;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

@@ -1,7 +1,44 @@
 Astina Labels Bundle
 ====================
 
-Add categorized labels to Doctrine entities and use them for filtered search.
+Add categorized translatable labels to Doctrine entities and use them for filtered search.
+
+### Configuration
+
+Add the following to your AppKernel.php file
+
+```php
+class AppKernel extends Kernel {
+    public function registerBundles() {
+        $bundles = array(
+            ...
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Astina\Bundle\LabelsBundle\AstinaLabelsBundle(),
+            ...
+        );
+    }
+}
+```
+
+Add the following to your config.yml
+
+```yaml
+stof_doctrine_extensions:
+    default_locale: de
+    translation_fallback: true
+    orm:
+        default:
+            translatable: true
+
+doctrine:
+    orm:
+        mappings:
+            gedmo_translatable:
+                type: annotation
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                is_bundle: false
+```
 
 ### Usage
 
@@ -18,6 +55,41 @@ class Foo
     private $labels;
 }
 ```
+
+Use it in a formType like this:
+
+```php
+    $builder
+        ->add('labels', 'astina_labels', array(
+            'categories' => array('category1', 'category2'...),
+            'label' => 'Labels',
+            'required' => false,
+        ))
+    ;
+```
+
+Each label has to belong to a category if you want to see them in a formType so configure them with fixtures.
+
+```php
+    public function load(ObjectManager $manager)
+    {
+        $labelCategory = new LabelCategory();
+        $labelCategory->setName('category1');
+        $manager->persist($labelCategory);
+
+        foreach ($labelsArray as $labelName) {
+            $label = new Label();
+            $label->setName($labelName);
+            $label->setCategory($labelCategory);
+            $manager->persist($label);
+        }
+        $manager->flush();
+    }
+```
+
+For administration use AstinaWebcms catalogue capabilities (See [FURE](https://github.com/astina/fure) project for implementation details).
+
+### Search
 
 Configure a filter search service:
 

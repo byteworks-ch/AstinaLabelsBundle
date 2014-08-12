@@ -18,6 +18,7 @@ class LabelCategory
     private $id;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=50)
      */
     private $name;
@@ -33,6 +34,11 @@ class LabelCategory
      * @ORM\OneToMany(targetEntity="Label", mappedBy="category", cascade={"remove"})
      */
     private $labels;
+
+    /**
+     * @Gedmo\Locale
+     */
+    private $locale;
 
     function __construct()
     {
@@ -77,5 +83,9 @@ class LabelCategory
     public function getLabels()
     {
         return $this->labels;
+    }
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }
