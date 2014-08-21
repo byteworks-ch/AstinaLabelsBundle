@@ -87,8 +87,6 @@ Each label has to belong to a category if you want to see them in a formType so 
     }
 ```
 
-For administration use AstinaWebcms catalogue capabilities (See [FURE](https://github.com/astina/fure) project for implementation details).
-
 ### Search
 
 Configure a filter search service:
