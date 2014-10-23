@@ -14,6 +14,8 @@ class SearchQuery
 
     private $mode;
 
+    private $locale;
+
     const MODE_AND = 'and';
     const MODE_OR = 'or';
     const MODE_CATEGORIES = 'categories';
@@ -24,14 +26,16 @@ class SearchQuery
      * @param int $max
      * @param array $orderBy array(field => asc|desc)
      * @param null $mode
+     * @param null $locale
      */
-    function __construct(array $labels = array(), $offset = 0, $max = 50, array $orderBy = array(), $mode = null)
+    function __construct(array $labels = array(), $offset = 0, $max = 50, array $orderBy = array(), $mode = null, $locale = null)
     {
         $this->labels = $labels;
         $this->max = $max;
         $this->offset = $offset;
         $this->orderBy = $orderBy;
         $this->mode = $mode ?: self::MODE_CATEGORIES;
+        $this->locale = $locale;
     }
 
     public function setLabels($labels)
@@ -77,5 +81,15 @@ class SearchQuery
     public function getMode()
     {
         return $this->mode;
+    }
+
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    public function getLocale()
+    {
+        return $this->locale;
     }
 } 

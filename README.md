@@ -96,6 +96,7 @@ Configure a filter search service:
 services:
     app.filter_search.foo:
         class: Astina\Bundle\LabelsBundle\Search\LabelSearch
+        #class: Astina\Bundle\LabelsBundle\Search\TranslatedLabelSearch
         arguments:
             - @astina_labels.repository.label
             - @app.repository.foo
