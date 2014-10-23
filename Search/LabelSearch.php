@@ -35,16 +35,7 @@ class LabelSearch implements LabelSearchInterface
 
     public function search(SearchQuery $searchQuery)
     {
-        $builder = $this->createQueryBuilder($searchQuery)
-            ->setFirstResult($searchQuery->getOffset())
-            ->setMaxResults($searchQuery->getMax())
-        ;
-
-        foreach ($searchQuery->getOrderBy() as $order => $sort) {
-            $builder->addOrderBy('e.' . $order, $sort);
-        }
-
-        return $builder->getQuery()->getResult();
+        return $this->createQuery($searchQuery)->getResult();
     }
 
     public function count(SearchQuery $searchQuery)
@@ -54,6 +45,20 @@ class LabelSearch implements LabelSearchInterface
         $builder->select('count(e)');
 
         return (int) $builder->getQuery()->getSingleScalarResult();
+    }
+
+    protected function createQuery(SearchQuery $searchQuery)
+    {
+        $builder = $this->createQueryBuilder($searchQuery)
+            ->setFirstResult($searchQuery->getOffset())
+            ->setMaxResults($searchQuery->getMax())
+        ;
+
+        foreach ($searchQuery->getOrderBy() as $order => $sort) {
+            $builder->addOrderBy('e.' . $order, $sort);
+        }
+
+        return $builder->getQuery();
     }
 
     protected function createQueryBuilder(SearchQuery $searchQuery)
