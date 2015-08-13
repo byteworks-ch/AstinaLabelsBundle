@@ -10,12 +10,19 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Label
 {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * For sorting in UI
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
 
     /**
      * @Gedmo\Translatable
@@ -34,6 +41,7 @@ class Label
      */
     private $locale;
 
+
     function __toString()
     {
         return $this->name;
@@ -42,6 +50,16 @@ class Label
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 
     public function setName($name)
@@ -68,4 +86,5 @@ class Label
     {
         $this->locale = $locale;
     }
+
 }

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class LabelRepository extends EntityRepository
 {
+
     /**
      * @param $labels array
      * @param LabelCategory $category
@@ -30,8 +31,12 @@ class LabelRepository extends EntityRepository
             ;
         }
 
-        return $builder->getQuery()->getResult();
+        return $builder->add('orderBy', 'l.position ASC, l.id ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
+
 
     /**
      * @param array $categories names or ids
@@ -44,10 +49,12 @@ class LabelRepository extends EntityRepository
             ->where('c.name in (:categories)')
             ->orWhere('c.id in (:categories)')
             ->setParameter('categories', $categories)
+            ->add('orderBy', 'c.position ASC, l.position ASC, l.id ASC')
         ;
 
         return $builder->getQuery()->getResult();
     }
+
 
     /**
      * @param array $categories names or ids
@@ -58,11 +65,14 @@ class LabelRepository extends EntityRepository
         $labels = $this->findByCategories($categories);
 
         $groupedLabels = array();
+
         foreach ($categories as $category) {
             if ($category instanceof LabelCategory) {
                 $category = $category->getId();
             }
+
             $groupedLabels[$category] = array();
+
             foreach ($labels as $label) {
                 if ($label->getCategory()->getId() === $category || $label->getCategory()->getName() === $category) {
                     $groupedLabels[$category][] = $label;
@@ -72,4 +82,5 @@ class LabelRepository extends EntityRepository
 
         return $groupedLabels;
     }
+
 }
