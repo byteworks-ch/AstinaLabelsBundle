@@ -6,10 +6,12 @@ use Doctrine\ORM\EntityRepository;
 
 class LabelCategoryRepository extends EntityRepository
 {
+
     public function findAll()
     {
         return parent::findBy(array(), array('position' => 'asc'));
     }
+
 
     /**
      * @param $names
@@ -25,4 +27,5 @@ class LabelCategoryRepository extends EntityRepository
             ->getResult()
         ;
     }
+
 }
