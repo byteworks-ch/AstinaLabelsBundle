@@ -124,9 +124,21 @@ class LabelsType extends AbstractType
             'class' => 'Astina\Bundle\LabelsBundle\Entity\Label',
             'multiple' => true,
             'translation_domain' => 'labels',
-            'choice_translation_domain' => true,
             'query_builder' => $queryBuilder,
         ));
+        
+        // use choice_translation_domain option for symfony >= 2.7
+        // @see https://github.com/symfony/symfony/blob/2.7/UPGRADE-2.7.md
+        if(\Symfony\Component\HttpKernel\Kernel::VERSION >= 2.7) {
+            $builder->add($category->getName(), 'entity', array(
+                'class' => 'Astina\Bundle\LabelsBundle\Entity\Label',
+                'multiple' => true,
+                'translation_domain' => 'labels',
+                'choice_translation_domain' => true,
+                'query_builder' => $queryBuilder,
+            ));
+        }
+        
     }
 
     protected function createQueryBuilder(LabelCategory $category)
