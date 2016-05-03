@@ -124,6 +124,7 @@ class LabelsType extends AbstractType
             'class' => 'Astina\Bundle\LabelsBundle\Entity\Label',
             'multiple' => true,
             'translation_domain' => 'labels',
+            'choice_translation_domain' => true,
             'query_builder' => $queryBuilder,
         ));
     }
