@@ -6,7 +6,7 @@ services:
     astina_labels.form.type.labels:
         class: %astina_labels.form.type.labels.class%
         arguments:
-            - @astina_labels.repository.label_category
+            - '@astina_labels.repository.label_category'
         tags:
             - { name: form.type, alias: astina_labels }
 
